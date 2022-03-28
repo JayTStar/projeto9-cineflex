@@ -1,12 +1,13 @@
 import { Link } from "react-router-dom"
 import styled from 'styled-components';
 
-export default function Horario({idSessao, dia, data, horarios}){
+export default function Horario({dia, data, horarios}){
     const hora = horarios.map(elemento => {return elemento})
+
     return(
         <Sessao>
             <Data>{dia} - {data}</Data>
-            <Horas>{hora.map(elemento => {return <Link params={idSessao} to={`/assentos/${idSessao}`}><Hora>{elemento.name}</Hora></Link>})}</Horas> 
+            <Horas>{hora.map(elemento => {return <Link params={elemento.id} to={`/assentos/${elemento.id}`}><Hora>{elemento.name}</Hora></Link>})}</Horas> 
         </Sessao>
     )
 }

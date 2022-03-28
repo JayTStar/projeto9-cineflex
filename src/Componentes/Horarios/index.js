@@ -3,9 +3,12 @@ import { useParams } from 'react-router-dom';
 import axios from "axios";
 import Horario from './Horario';
 import styled from 'styled-components';
+import Footer from '../Footer';
 
 export default function Horarios(){
     const [horarios, setHorarios] = useState([]);
+    const [titulo, setTitulo]= useState("");
+    const [poster, setPoster] = useState("");
     const { id } = useParams();
 
     useEffect(() => {
@@ -13,13 +16,17 @@ export default function Horarios(){
 
         requisicao.then(resposta => {
             setHorarios(resposta.data.days);
+            setTitulo(resposta.data.title);
+            setPoster(resposta.data.posterURL);
         })
     })
 
+    
     return(
         <>
             <Titulo>Selecione o Horário</Titulo>
-            <Lista>{horarios.map(elemento =>{return <Horario id={elemento.id} dia={elemento.weekday} data={elemento.date} horarios={elemento.showtimes}/>})}</Lista>
+            <Lista>{horarios.map(elemento =>{return <Horario dia={elemento.weekday} data={elemento.date} horarios={elemento.showtimes}/>})}</Lista>
+            <Footer poster={poster} titulo={titulo}/>
         </>
     );
 }
@@ -47,4 +54,5 @@ const Lista = styled.ul`
     heigth: auto;
 
     padding: 0;
+    margin-bottom: 120px;
 `
